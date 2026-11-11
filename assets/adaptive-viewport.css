@@ -107,3 +107,32 @@ body { overflow-x:clip; }
   #zynsource-home .hero-intro h1,#zynsource-home .hero-lede h1,#zynsource-home .hero-top h1 { font-size:32px!important; }
   #zynsource-home .wizard-mini-grid,#zynsource-home .wizard-fields,#zynsource-home .fake-fields { gap:6px!important; }
 }
+
+
+/* FINAL ALIGNMENT FIX: both hero panels are equal in width and height; compact opening */
+@media (min-width:1000px) {
+ #zynsource-home .product-journey,#zynsource-home .journey {grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr)!important;align-items:stretch!important;gap:13px!important;}
+ #zynsource-home .product-journey>.journey-card,#zynsource-home .journey>.journey-panel {height:323px!important;min-height:323px!important;max-height:323px!important;align-self:stretch!important;display:flex!important;flex-direction:column!important;}
+ #zynsource-home .journey-card.app .result-preview,#zynsource-home .journey-panel.outcome .app-frame {flex:1 1 auto!important;min-height:0!important;height:auto!important;aspect-ratio:auto!important;}
+ #zynsource-home .journey-card.app .result-preview img,#zynsource-home .journey-panel.outcome .app-frame img {height:100%!important;width:100%!important;object-fit:contain!important;object-position:center center!important;}
+ #zynsource-home .wizard-mini,#zynsource-home .journey-content,#zynsource-home .wizard-stage {flex:1 1 auto!important;min-height:0!important;padding:12px 16px!important;}
+ #zynsource-home .product-hero .wrap,#zynsource-home .new-hero .wrap{width:min(1280px,calc(100% - 52px))!important;}
+ #zynsource-home .hero.product-hero,#zynsource-home .hero.new-hero{padding-top:18px!important;padding-bottom:26px!important;}
+ #zynsource-home .hero-intro,#zynsource-home .hero-lede,#zynsource-home .hero-top{margin-bottom:16px!important;}
+ #zynsource-home .hero-intro h1,#zynsource-home .hero-lede h1,#zynsource-home .hero-top h1{font-size:clamp(36px,3.65vw,58px)!important;line-height:1.04!important;margin-bottom:12px!important;}
+ #zynsource-home .hero-intro p,#zynsource-home .hero-lede p,#zynsource-home .hero-top p{max-width:940px!important;line-height:1.38!important;font-size:15px!important;margin-bottom:12px!important;}
+ #zynsource-home .hero-intro .status-line,#zynsource-home .hero-lede .status-line,#zynsource-home .hero-top .status-line {margin-bottom:11px!important;}
+ #zynsource-home .hero-intro .btn,#zynsource-home .hero-lede .btn,#zynsource-home .hero-top .btn{min-height:39px!important;padding:9px 14px!important;}
+ #zynsource-home .product-proof,#zynsource-home .feature-tags,#zynsource-home .capability-strip{margin-top:13px!important;}
+ #zynsource-home .hero-disclaimer,#zynsource-home .hero-note,#zynsource-home .story-caption{margin-top:8px!important;}
+}
+@media (min-width:1000px) and (max-height:780px) {
+ #zynsource-home .hero.product-hero,#zynsource-home .hero.new-hero{padding-top:12px!important;padding-bottom:14px!important;}
+ #zynsource-home .hero-intro h1,#zynsource-home .hero-lede h1,#zynsource-home .hero-top h1{font-size:clamp(33px,3.2vw,49px)!important;}
+ #zynsource-home .product-journey>.journey-card,#zynsource-home .journey>.journey-panel{height:288px!important;min-height:288px!important;max-height:288px!important;}
+ #zynsource-home .wizard-mini-grid,#zynsource-home .wizard-fields,#zynsource-home .fake-fields{gap:5px!important;}
+}
+@media (max-width:999px) {
+ #zynsource-home .product-journey>.journey-card,#zynsource-home .journey>.journey-panel{height:auto!important;max-height:none!important;min-height:0!important;}
+ #zynsource-home .journey-card.app .result-preview,#zynsource-home .journey-panel.outcome .app-frame{height:auto!important;aspect-ratio:16/9!important;}
+}
