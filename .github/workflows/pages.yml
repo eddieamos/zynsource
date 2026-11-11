@@ -20,19 +20,26 @@ jobs:
       - uses: actions/checkout@v4
       - name: Set up Pages
         uses: actions/configure-pages@v5
-      - name: Apply adaptive viewport stylesheet
+      - name: Embed responsive stylesheet in homepage
         run: |
           python3 - <<'PY'
           from pathlib import Path
           p = Path("index.html")
+          css_path = Path("assets/adaptive-viewport.css")
           html = p.read_text(encoding="utf-8")
-          marker = '<link rel="stylesheet" href="assets/adaptive-viewport.css">'
+          css = css_path.read_text(encoding="utf-8")
+          if '</head>' not in html:
+              raise RuntimeError("Missing HTML head")
+          old_link = '<link rel="stylesheet" href="assets/adaptive-viewport.css">'
+          html = html.replace(old_link, '')
+          marker = '<!-- responsive-layout-v3 -->'
+          css_tag = marker + '<style>\\n' + css + '\\n</style>'
           if marker not in html:
-              if '</head>' not in html:
-                  raise RuntimeError("No HTML head found")
-              html = html.replace('</head>', marker + '\n</head>', 1)
-              p.write_text(html, encoding="utf-8")
-          assert marker in p.read_text(encoding="utf-8")
+              html = html.replace('</head>', css_tag + '\\n</head>', 1)
+          if marker not in html or 'FINAL ALIGNMENT FIX' not in html:
+              raise RuntimeError("Responsive CSS not embedded")
+          p.write_text(html, encoding="utf-8")
+          print("Embedded", len(css), "CSS characters")
           PY
       - name: Package website
         uses: actions/upload-pages-artifact@v4
