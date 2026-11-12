@@ -20,26 +20,17 @@ jobs:
       - uses: actions/checkout@v4
       - name: Set up Pages
         uses: actions/configure-pages@v5
-      - name: Embed responsive stylesheet in homepage
+      - name: Verify multipage site files
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          p = Path("index.html")
-          css_path = Path("assets/adaptive-viewport.css")
-          html = p.read_text(encoding="utf-8")
-          css = css_path.read_text(encoding="utf-8")
-          if '</head>' not in html:
-              raise RuntimeError("Missing HTML head")
-          old_link = '<link rel="stylesheet" href="assets/adaptive-viewport.css">'
-          html = html.replace(old_link, '')
-          marker = '<!-- responsive-layout-v3 -->'
-          css_tag = marker + '<style>\\n' + css + '\\n</style>'
-          if marker not in html:
-              html = html.replace('</head>', css_tag + '\\n</head>', 1)
-          if marker not in html or 'FINAL ALIGNMENT FIX' not in html:
-              raise RuntimeError("Responsive CSS not embedded")
-          p.write_text(html, encoding="utf-8")
-          print("Embedded", len(css), "CSS characters")
+          pages = ['index.html', 'how-it-works/index.html', 'platform/index.html', 'real-software/index.html', 'solutions/index.html', 'governance/index.html', 'perspectives/index.html', 'contact/index.html']
+          for path in pages:
+              html = Path(path).read_text(encoding='utf-8')
+              assert '<nav' in html and 'site.css' in html, path
+          assert Path('assets/site.css').exists()
+          assert Path('assets/site.js').exists()
+          print('Verified', len(pages), 'pages')
           PY
       - name: Package website
         uses: actions/upload-pages-artifact@v4
